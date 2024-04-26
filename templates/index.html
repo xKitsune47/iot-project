@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Sensor readings</title>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+            integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+            integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="{{url_for('static', filename = 'css/app.css')}}"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename = 'js/app.js') }}"
+        ></script>
+
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar__element"><a href="#">Current</a></div>
+                <div class="navbar__element">
+                    <a href="/averages">Averages</a>
+                </div>
+            </nav>
+
+            <!-- change amount on chart -->
+            <div class="change__amount">
+                <h2>Change amount of visible readings</h2>
+                <input type="number" class="max-data-count" />
+            </div>
+
+            <div class="charts">
+                <!-- temperature -->
+                <div class="hero">
+                    <h1>Temperature</h1>
+                    <div class="chart-container">
+                        <canvas id="temperatureChart" class="chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- moisture -->
+                <div class="hero">
+                    <h1>Moisture</h1>
+                    <div class="chart-container">
+                        <canvas id="moistureChart" class="chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
