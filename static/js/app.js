@@ -72,3 +72,7 @@ $(document).ready(function () {
         addData(moistureChart, msg.date, msg.mvalue);
     });
 });
+
+document.querySelector('.change__submit').addEventListener('click', function(e){
+    e.preventDefault()
+})

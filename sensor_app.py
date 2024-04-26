@@ -3,7 +3,8 @@ from flask_socketio import SocketIO
 from threading import Lock
 from datetime import datetime, timedelta
 
-filePath = '//DESKTOP-RQ7D7A8/iot/temp-moist-data.txt'
+dataPath = '//DESKTOP-RQ7D7A8/iot/temp-moist-data.txt'
+settingsPath = '//DESKTOP-RQ7D7A8/iot/settings.txt'
 
 # background thread
 thread = None
@@ -22,19 +23,30 @@ def get_current_datetime(reading_date):
 # sending data to socket
 def background_thread():
     while True:
-        sensor_readings = open(filePath, 'r')
+        sensor_readings = open(dataPath, 'r')
+        settings = open(settingsPath, 'r')
+        lines = settings.readlines()
+        wait_time = float(lines[0].split(' ')[1])
+        if wait_time < 1:
+            wait_time = 1
+
         lines = sensor_readings.readlines()
         reading_date, readings = lines[-1].split(',')
         temperature, humidity = readings.split('-')
         sensor_readings.close()
+        settings.close()
         socketio.emit('updateSensorData',
                       {'tvalue': temperature, 'mvalue': humidity, "date": get_current_datetime(reading_date)})
-        socketio.sleep(1)
+        socketio.sleep(wait_time)
 
 
 # homepage
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        new_wait_time = int(request.form.get('changeWaitTime'))
+        with open(settingsPath, 'w') as settings_file:
+            settings_file.write(f"waitTime: {new_wait_time}")
     return render_template('index.html')
 
 
@@ -102,8 +114,8 @@ def calcAverage(data, time_delta):
 # subpage with averages
 @app.route('/averages')
 def average():
-    temperatureData = parseTemperatures(filePath)
-    moistureData = parseMoistures(filePath)
+    temperatureData = parseTemperatures(dataPath)
+    moistureData = parseMoistures(dataPath)
 
     averageTemps = [calcAverage(temperatureData, timedelta(hours=1)),
                     calcAverage(temperatureData, timedelta(days=1)),

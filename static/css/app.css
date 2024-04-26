@@ -45,6 +45,12 @@ body {
     }
 }
 
+.change{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
 .hero {
     background: #eee;
     padding: 20px;
@@ -63,7 +69,11 @@ body {
     margin: 0 auto;
 }
 
-.max-data-count {
+.change__element{
+    width: 50%;
+}
+
+.change__values__input {
     font-family: "Ubuntu";
     width: 10rem;
     height: 3rem;
@@ -89,4 +99,8 @@ body {
     th {
         border: 1px black solid;
     }
+}
+
+.change__submit{
+    height: 2rem;
 }

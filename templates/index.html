@@ -41,10 +41,20 @@
             </nav>
 
             <!-- change amount on chart -->
-            <div class="change__amount">
-                <h2>Change amount of visible readings</h2>
-                <input type="number" class="max-data-count" />
-            </div>
+            <section class="change">
+                <div class="change__element">
+                    <h2>Change number of visible readings</h2>
+                    <input type="number" class="max-data-count change__values__input" />
+                </div>
+                <div class="change__element">
+                    <form class="change__settings" method="post">
+                        <h2>Change time between measurements</h2>
+                        <input type="number" name="changeWaitTime" class="change__values__input" /><br>
+                        <button type="submit" class="change__submit">Submit change</button>
+                    </form>
+                </div>
+            </section>
+
 
             <div class="charts">
                 <!-- temperature -->
